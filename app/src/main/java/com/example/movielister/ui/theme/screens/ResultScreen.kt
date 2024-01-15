@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.movielister.components.MovieCard
 import com.example.movielister.model.NowPlaying
 import com.example.movielister.model.PopularMovie
 import com.example.movielister.model.TopRated

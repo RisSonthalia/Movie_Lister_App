@@ -1,4 +1,4 @@
-package com.example.movielister.ui.theme.screens
+package com.example.movielister.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,6 +23,7 @@ import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.example.movielister.R
 import com.example.movielister.model.Result
+import com.example.movielister.ui.theme.screens.convertToImageUrl
 
 
 @Composable

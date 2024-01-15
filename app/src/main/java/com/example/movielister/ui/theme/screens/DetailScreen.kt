@@ -1,11 +1,8 @@
 package com.example.movielister.ui.theme.screens
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,34 +10,23 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -57,17 +43,20 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.movielister.model.Result
 import com.example.movielister.navigation.SharedViewModel
-import com.example.movielister.ui.theme.DetailScreenTopAppBar
-import com.example.movielister.ui.theme.MovieTopAppBar
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.yield
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import com.example.movielister.viewmodel.DataStoreViewModel
+import com.example.movielister.components.DetailScreenTopAppBar
+import com.example.movielister.viewmodel.WatchListViewModel
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(navController: NavController, sharedViewModel: SharedViewModel) {
+fun DetailsScreen(
+    navController: NavController,
+    sharedViewModel: SharedViewModel,
+    watchListViewModel: WatchListViewModel,
+    dataStoreViewModel: DataStoreViewModel
+) {
 
       val movie=sharedViewModel.movie
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
@@ -174,30 +163,59 @@ fun DetailsScreen(navController: NavController, sharedViewModel: SharedViewModel
                     .fillMaxWidth()
                     .padding(10.dp)) {
                     Column {
-                        Icon(
-                            imageVector = Icons.Default.FavoriteBorder,
-                            contentDescription ="Watchlist" )
+                        IconButton(onClick = {
+                            if (movie != null) {
+
+                                if(watchListViewModel.getCount(movie)==0){
+                                    watchListViewModel.addToWatchList(movie)
+                                }else{
+                                    watchListViewModel.removeFromWatchList(movie)
+                                }
+//                            if (movie != null) {
+//                                dataStoreViewModel.addToWatchList(movie)
+//                            }
+
+                            }
+                        }) {
+                            if(movie?.let { it1 -> watchListViewModel.getCount(it1) } ==0){
+                                Icon(
+                                    imageVector = Icons.Outlined.FavoriteBorder,
+                                    contentDescription = "Watchlist"
+                                )
+                            }else{
+                                Icon(
+                                    imageVector = Icons.Filled.Favorite,
+                                    contentDescription = "Watchlist"
+                                )
+                            }
+
+
+                        }
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Watchlist",
+                        Text(text = " Watchlist",
                             style = TextStyle(
                                 fontStyle = FontStyle.Normal,
                                 fontSize = 11.sp
                             ))
+
                     }
 
                     Spacer(modifier = Modifier.width(20.dp))
 
                     Column {
-
-                        Icon(
-                            imageVector = Icons.Default.Share,
-                            contentDescription ="Share" )
+                        IconButton(onClick = {
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Share,
+                                contentDescription ="Share" )
+                        }
                         Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = "Share",
+                        Text(text = "    Share",
                             style = TextStyle(
                                 fontStyle = FontStyle.Normal,
                                 fontSize = 11.sp
                             ))
+
                     }
                 }
             }

@@ -14,6 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.movielister.navigation.SharedViewModel
+import com.example.movielister.viewmodel.NowPlaying_UiState
+import com.example.movielister.viewmodel.PopularMovie_UiState
+import com.example.movielister.viewmodel.TopRatedMovie_UiState
 
 
 @Composable

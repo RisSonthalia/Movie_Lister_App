@@ -1,4 +1,4 @@
-package com.example.movielister.ui.theme
+package com.example.movielister.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -21,12 +21,12 @@ import com.example.movielister.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MovieTopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier) {
+fun MovieTopAppBar(scrollBehavior: TopAppBarScrollBehavior, modifier: Modifier = Modifier,name:String) {
     CenterAlignedTopAppBar(
         scrollBehavior = scrollBehavior,
         title = {
             Text(
-                text = stringResource(R.string.app_name),
+                text = name,
                 style = MaterialTheme.typography.headlineSmall,
             )
         },
